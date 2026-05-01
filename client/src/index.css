@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:is(.dark *));
 
 @theme {
   --color-primary-50: #f0f9ff;
@@ -74,10 +74,10 @@
 
 @layer base {
   html {
-    @apply bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-white font-sans antialiased;
+    @apply font-sans antialiased;
   }
   body {
-    @apply transition-colors duration-300;
+    @apply bg-gray-50 text-gray-900 dark:bg-gray-950 dark:text-white transition-colors duration-300;
   }
   
   /* Scrollbar personalizado */
@@ -101,7 +101,7 @@
   }
   
   .card-elevated {
-    @apply card shadow-lg hover:shadow-xl;
+    @apply bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 transition-all duration-200 shadow-lg hover:shadow-xl;
   }
   
   .btn-primary {
