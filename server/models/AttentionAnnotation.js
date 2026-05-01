@@ -1,17 +1,18 @@
 import mongoose from 'mongoose';
 
 const attentionAnnotationSchema = new mongoose.Schema({
-  keyframeId: { type: mongoose.Schema.Types.ObjectId, ref: 'Keyframe', required: true },
-  zoneId: { type: mongoose.Schema.Types.ObjectId, required: true }, // Coincide con el _id de una zone dentro de ClassroomLayout
+  sessionId: { type: mongoose.Schema.Types.ObjectId, ref: 'VideoSession', required: true },
+  timestamp: { type: Number, required: true }, // Segundos exactos del vídeo
+  zoneId: { type: String, required: true }, // Coincide con el id de una zone dentro de ClassroomLayout
   attentionLevel: { 
     type: String, 
     enum: ['LOW', 'MEDIUM', 'HIGH'],
     required: true 
   },
-  annotatorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' } // Opcional por si añadimos autenticación luego
+  annotatorId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' }
 }, { timestamps: true });
 
-// Índice para asegurar que no etiquetamos dos veces la misma zona en el mismo frame
-attentionAnnotationSchema.index({ keyframeId: 1, zoneId: 1 }, { unique: true });
+// Índice compuesto para evitar dobles etiquetas en el mismo milisegundo exacto para una zona
+attentionAnnotationSchema.index({ sessionId: 1, timestamp: 1, zoneId: 1 }, { unique: true });
 
 export default mongoose.model('AttentionAnnotation', attentionAnnotationSchema);

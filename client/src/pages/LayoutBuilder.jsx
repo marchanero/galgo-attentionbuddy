@@ -57,10 +57,32 @@ export default function LayoutBuilder() {
     }
   };
 
-  const handleSave = () => {
-    // Aquí enviaríamos al backend (ClassroomLayout)
-    console.log("Guardando layout con zonas:", zones);
-    alert(`¡Plantilla guardada con ${zones.length} zonas! (Mira la consola)`);
+  const handleSave = async () => {
+    if (zones.length === 0) return;
+    
+    try {
+      const response = await fetch('http://localhost:5000/api/layouts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: `Aula ${new Date().toLocaleTimeString()}`, // Esto luego lo pediremos en un input
+          backgroundImageUrl: imageUrl,
+          zones: zones.map(z => ({
+            label: z.label,
+            coordinates: { x: z.x, y: z.y, width: z.width, height: z.height }
+          }))
+        })
+      });
+
+      if (response.ok) {
+        alert(`¡Plantilla guardada con ${zones.length} zonas en la base de datos!`);
+      } else {
+        alert("Error al guardar la plantilla");
+      }
+    } catch (error) {
+      console.error(error);
+      alert("Error de red al guardar la plantilla");
+    }
   };
 
   return (
