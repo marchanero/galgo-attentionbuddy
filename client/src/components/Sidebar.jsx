@@ -7,6 +7,7 @@ export default function Sidebar() {
   const menuItems = [
     { id: 'dashboard', path: '/', label: 'Dashboard', icon: '📊' },
     { id: 'layouts', path: '/layout-builder', label: 'Aulas y Plantillas', icon: '🏫' },
+    { id: 'presets', path: '/presets', label: 'Presets de Etiquetado', icon: '⚡' },
     { id: 'sessions', path: '/sessions', label: 'Sesiones de Vídeo', icon: '📹' },
     { id: 'exports', path: '/exports', label: 'Exportar Dataset', icon: '📥' },
   ];
