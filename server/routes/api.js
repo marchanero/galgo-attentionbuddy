@@ -58,12 +58,12 @@ router.get('/sessions', async (req, res) => {
 // --- ANNOTATIONS ---
 router.post('/annotations', async (req, res) => {
   try {
-    const { sessionId, timestamp, zoneId, attentionLevel } = req.body;
+    const { sessionId, timestamp, zoneId, teacherPerception, observableIndicators, notes } = req.body;
     
     // Upsert anotación en este momento exacto para esa zona
     const annotation = await AttentionAnnotation.findOneAndUpdate(
       { sessionId, timestamp, zoneId },
-      { attentionLevel },
+      { teacherPerception, observableIndicators, notes },
       { new: true, upsert: true }
     );
     
